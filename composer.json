@@ -1,0 +1,12 @@
+{
+    "require": {
+        "fkooman/oauth-client": "^0.5.2",
+        "fkooman/guzzle-bearer-auth-plugin": "^0.2.2"
+    },
+    "authors": [
+        {
+            "name": "Lars Vierbergen",
+            "email": "vierbergenlars@gmail.com"
+        }
+    ]
+}
