@@ -99,6 +99,7 @@ function authserver_login_authenticate($user)
     if(!$user) {
         $userId = wp_create_user($response['guid'], '');
         $user = get_user_by('id', $userId);
+        $user->show_admin_bar_front = "false";
     }
 
     $user->display_name = $response['name'];
@@ -106,7 +107,6 @@ function authserver_login_authenticate($user)
     $user->first_name = $names[0];
     $user->last_name = isset($names[1])?$names[1]:'';
     $user->nickname = $response['username'];
-    $user->show_admin_bar_front = "false";
 
     foreach($user->roles as $role) {
         if(!in_array($role, $groups))
