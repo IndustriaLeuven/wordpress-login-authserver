@@ -177,3 +177,12 @@ function authserver_login_remove_add_user()
 }
 
 add_filter('show_password_fields', function() {return false;});
+
+add_action('user_profile_update_errors', 'authserver_user_profile_update_errors', 10, 3);
+function authserver_user_profile_update_errors(WP_Error &$errors, $update, &$user) {
+    if(!$update)
+        return;
+    $oldUser = get_user_by('id', $user->ID);
+    if($oldUser->user_email !== $user->user_email)
+        $errors->add('invalid_email', __('<strong>ERROR</strong>: This email address is your identifier. You cannot change it.'), array( 'form-field' => 'email' ));
+}
