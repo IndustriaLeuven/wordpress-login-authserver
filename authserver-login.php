@@ -93,11 +93,20 @@ function authserver_login_authenticate($user)
         })
     );
 
-    $user = get_user_by('login', $response['guid']);
+    $user = get_user_by('email', $response['guid'].'@noreply.industria.be');
 
     // If no user exists: create a new one.
     if(!$user) {
-        $userId = wp_create_user($response['guid'], '');
+        $i=0;
+        do {
+            $userId = wp_create_user($response['username'].str_repeat('_', $i++), '', $response['guid'].'@noreply.industria.be');
+        } while(is_wp_error($userId) && $i < 15);
+
+        if(is_wp_error($userId))  {
+            $error = $userId;
+            goto fail;
+
+        }
         $user = get_user_by('id', $userId);
         $user->show_admin_bar_front = "false";
     }
@@ -107,6 +116,7 @@ function authserver_login_authenticate($user)
     $user->first_name = $names[0];
     $user->last_name = isset($names[1])?$names[1]:'';
     $user->nickname = $response['username'];
+    $user->user_email = $response['guid'].'@noreply.industria.be';
 
     foreach($user->roles as $role) {
         if(!in_array($role, $groups))
@@ -165,3 +175,5 @@ function authserver_login_remove_add_user()
         echo '<style>#your-profile h3, .add-new-h2, .user-user-login-wrap, .user-role-wrap, .user-first-name-wrap, .user-last-name-wrap, .user-nickname-wrap, .user-display-name-wrap, .user-email-wrap, .user-url-wrap, .user-description-wrap,  #password, .user-pass2-wrap {display: none;}</style>';
     }
 }
+
+add_filter('show_password_fields', function() {return false;});
