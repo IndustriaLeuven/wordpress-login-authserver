@@ -164,17 +164,6 @@ function authserver_login_remove_menu_pages()
 {
     remove_submenu_page('users.php', 'user-new.php');
 }
-add_action('admin_head', 'authserver_login_remove_add_user');
-function authserver_login_remove_add_user()
-{
-    global $current_screen;
-    if($current_screen->id == 'users') {
-        echo '<style>.add-new-h2, .wrap form .actions {display: none;}</style>';
-    }
-    if($current_screen->id == 'user-edit'|| $current_screen->id == 'profile')  {
-        echo '<style>#your-profile h3, .add-new-h2, .user-user-login-wrap, .user-role-wrap, .user-first-name-wrap, .user-last-name-wrap, .user-nickname-wrap, .user-display-name-wrap, .user-email-wrap, .user-url-wrap, .user-description-wrap,  #password, .user-pass2-wrap {display: none;}</style>';
-    }
-}
 
 add_filter('show_password_fields', function() {return false;});
 
