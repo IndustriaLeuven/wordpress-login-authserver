@@ -3,7 +3,7 @@
 Plugin Name: Authserver Login
 Plugin URI: https://github.com/IndustriaLeuven/wordpress-login-authserver
 Description: Log in to wordpress with AuthServer
-Version: 1.0
+Version: 1.1
 Author: Lars Vierbergen
 Author URI: http://lars.vbgn.be
 License: AGPL
